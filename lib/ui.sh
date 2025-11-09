@@ -37,8 +37,8 @@ show_footer() {
     echo -e "${BLUE}│${NC} Total disponible: ${total_count} scripts                                  ${BLUE}│${NC}"
     echo -e "${BLUE}└────────────────────────────────────────────────────────────────┘${NC}"
     echo ""
-    echo -e "${GRAY}[↑↓]${NC} Naviguer  ${GRAY}[Espace]${NC} Cocher/Décocher  ${GRAY}[a]${NC} Tout  ${GRAY}[n]${NC} Rien"
-    echo -e "${GRAY}[p]${NC} Profils rapides  ${GRAY}[Enter]${NC} Installer  ${GRAY}[q]${NC} Quitter"
+    echo -e "${GRAY}[↑/↓]${NC} Naviguer  ${GRAY}[Espace]${NC} Sélectionner  ${GRAY}[a]${NC} Tout  ${GRAY}[n]${NC} Rien  ${GRAY}[p]${NC} Profils"
+    echo -e "${GRAY}[Enter]${NC} Installer  ${GRAY}[q]${NC} Quitter"
     echo ""
 }
 

@@ -21,7 +21,7 @@ apt-get update && apt-get install -y git && git clone https://github.com/Phips02
 ```bash
 ./deploy.sh
 ```
-Navigation : `a` (tout sélectionner), `n` (rien), `Enter` (installer), `q` (quitter)
+Navigation : `↑/↓` (naviguer), `Espace` (sélectionner), `a` (tout), `n` (rien), `p` (profils), `Enter` (installer), `q` (quitter)
 
 **Commandes utiles** :
 ```bash

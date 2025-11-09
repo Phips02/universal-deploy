@@ -249,13 +249,16 @@ interactive_mode() {
 
     # Boucle principale de l'interface
     local quit=false
+    local current_index=0
+
     while [[ "$quit" == "false" ]]; do
         show_header
 
-        # Regrouper par catégorie
+        # Regrouper par catégorie et afficher
         local current_category=""
         local selected_count=0
         local installed_count=0
+        local display_index=0
 
         for script in "${all_scripts[@]}"; do
             local metadata="${script_info[$script]}"
@@ -274,18 +277,23 @@ interactive_mode() {
                     "monitoring") show_category "MONITORING - Surveillance" "📊" ;;
                     "network") show_category "NETWORK - Réseau et VPN" "🌐" ;;
                     "utilities") show_category "UTILITIES - Utilitaires" "🔧" ;;
+                    "backup") show_category "BACKUP - Sauvegardes" "💾" ;;
                     *) show_category "${category^^}" "📁" ;;
                 esac
                 current_category="$category"
             fi
 
-            # Afficher le script
+            # Afficher le script avec curseur si c'est l'index courant
+            local is_current="false"
+            [[ $display_index -eq $current_index ]] && is_current="true"
+
             show_script_item "${script_selected[$script]}" "${script_installed[$script]}" \
-                            "$display_name" "$description" "false"
+                            "$display_name" "$description" "$is_current"
 
             # Compter
             [[ "${script_selected[$script]}" == "true" ]] && ((selected_count++))
             [[ "${script_installed[$script]}" == "true" ]] && ((installed_count++))
+            ((display_index++))
         done
 
         close_category
@@ -293,25 +301,42 @@ interactive_mode() {
         # Afficher le footer
         show_footer "$selected_count" "${#all_scripts[@]}" "$installed_count"
 
-        # Lire l'entrée utilisateur
-        read -n 1 -r choice
-        echo ""
+        # Lire l'entrée utilisateur (gérer les flèches)
+        read -s -n 1 key
 
-        case "$choice" in
-            " ")  # Espace - toggle selection
-                # Pour simplifier, on va demander le numéro
-                ask_question "Numéro du script à cocher/décocher" ""
-                read -r num
-                # TODO: implémenter la sélection par numéro
-                ;;
-            "a"|"A")  # Tout sélectionner
-                for script in "${all_scripts[@]}"; do
-                    if [[ "${script_installed[$script]}" == "false" ]]; then
-                        script_selected["$script"]="true"
+        # Détecter les séquences d'échappement (flèches)
+        if [[ $key == $'\x1b' ]]; then
+            read -s -n 2 key  # Lire les 2 caractères suivants ([A ou [B)
+            case "$key" in
+                '[A')  # Flèche haut
+                    ((current_index--))
+                    [[ $current_index -lt 0 ]] && current_index=$((${#all_scripts[@]} - 1))
+                    ;;
+                '[B')  # Flèche bas
+                    ((current_index++))
+                    [[ $current_index -ge ${#all_scripts[@]} ]] && current_index=0
+                    ;;
+            esac
+        else
+            case "$key" in
+                " ")  # Espace - toggle selection de l'item courant
+                    local current_script="${all_scripts[$current_index]}"
+                    if [[ "${script_installed[$current_script]}" == "false" ]]; then
+                        if [[ "${script_selected[$current_script]}" == "true" ]]; then
+                            script_selected["$current_script"]="false"
+                        else
+                            script_selected["$current_script"]="true"
+                        fi
                     fi
-                done
-                ;;
-            "n"|"N")  # Rien sélectionner
+                    ;;
+                "a"|"A")  # Tout sélectionner
+                    for script in "${all_scripts[@]}"; do
+                        if [[ "${script_installed[$script]}" == "false" ]]; then
+                            script_selected["$script"]="true"
+                        fi
+                    done
+                    ;;
+                "n"|"N")  # Rien sélectionner
                 for script in "${all_scripts[@]}"; do
                     script_selected["$script"]="false"
                 done
@@ -367,7 +392,8 @@ interactive_mode() {
                     quit=true
                 fi
                 ;;
-        esac
+            esac
+        fi
     done
 
     # Installer les scripts sélectionnés
