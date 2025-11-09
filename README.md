@@ -11,7 +11,7 @@ Déployez vos scripts système, monitoring, sécurité et configurations sur n'i
 Sur votre nouveau serveur, copiez-collez cette commande :
 
 ```bash
-apt-get update && apt-get install -y git && git clone https://github.com/Phips02/universal-deploy.git && cd universal-deploy && ./deploy.sh
+apt-get update && apt-get install -y git && git clone https://github.com/Phips02/universal-deploy.git && cd universal-deploy && chmod +x deploy.sh && ./deploy.sh
 ```
 
 
