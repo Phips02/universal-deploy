@@ -1,0 +1,52 @@
+{
+  "profiles": {
+    "base": {
+      "name": "Base",
+      "description": "Installation minimale pour toute nouvelle machine",
+      "icon": "🏠",
+      "scripts": [
+        "base/00_lxc-details.sh",
+        "base/prompt-setup.sh"
+      ],
+      "estimated_time": "15s"
+    },
+    "security": {
+      "name": "Security",
+      "description": "Durcissement sécurité système",
+      "icon": "🔒",
+      "scripts": [
+        "security/sshd_config",
+        "security/fail2ban",
+        "security/unattended-upgrades"
+      ],
+      "estimated_time": "2min"
+    },
+    "monitoring": {
+      "name": "Monitoring",
+      "description": "Surveillance et notifications Telegram",
+      "icon": "📊",
+      "scripts": [
+        "monitoring/telegram_notif",
+        "monitoring/wtmp_monitor",
+        "monitoring/privilege_monitor"
+      ],
+      "estimated_time": "1min",
+      "requires_config": true
+    },
+    "vpn-server": {
+      "name": "VPN Server",
+      "description": "Serveur OpenVPN avec monitoring complet",
+      "icon": "🌐",
+      "scripts": [
+        "base/00_lxc-details.sh",
+        "security/sshd_config",
+        "security/fail2ban",
+        "monitoring/telegram_notif",
+        "network/openvpn_monitor",
+        "network/fail2ban-vpn"
+      ],
+      "estimated_time": "3min",
+      "requires_config": true
+    }
+  }
+}

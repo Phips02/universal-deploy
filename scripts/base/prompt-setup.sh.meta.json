@@ -1,0 +1,17 @@
+{
+  "name": "prompt-setup.sh",
+  "display_name": "Prompt personnalisé",
+  "description": "Configuration du prompt bash personnalisé et coloré",
+  "category": "base",
+  "version": "1.0",
+  "author": "Phips",
+  "destination": "/root/.bashrc",
+  "compatible_os": ["debian", "ubuntu"],
+  "requires_packages": [],
+  "requires_config": false,
+  "requires_reboot": false,
+  "post_install": [],
+  "estimated_time": "10s",
+  "tags": ["visual", "prompt", "bash"],
+  "public": true
+}

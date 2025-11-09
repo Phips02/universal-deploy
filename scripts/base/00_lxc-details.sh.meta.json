@@ -1,0 +1,17 @@
+{
+  "name": "00_lxc-details.sh",
+  "display_name": "LXC/VM System Info",
+  "description": "Affichage des informations système au login",
+  "category": "base",
+  "version": "1.0",
+  "author": "Phips",
+  "destination": "/etc/profile.d/00_lxc-details.sh",
+  "compatible_os": ["debian", "ubuntu"],
+  "requires_packages": ["lsb-release"],
+  "requires_config": false,
+  "requires_reboot": false,
+  "post_install": [],
+  "estimated_time": "5s",
+  "tags": ["essential", "system-info", "login", "lxc", "vm"],
+  "public": true
+}

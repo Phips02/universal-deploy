@@ -1,0 +1,30 @@
+# Vim temporary files
+*.swp
+*.swo
+*~
+
+# Editor directories
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local configuration
+*.local
+.env
+
+# Logs
+*.log
+logs/
+
+# Installation tracking (local to each machine)
+/etc/deployed-scripts/
+
+# Backup files
+*.bak
+*.backup
+
+# Test directories
+test-deploy/
